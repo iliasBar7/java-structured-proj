@@ -29,13 +29,13 @@ public class Project01 {
                 if (num >= 1 && num <= 49) { // Έλεγχος ορίων
                     inputNumbers[pivot++] = num;
                 } else {
-                    System.out.println("Αριθμός εκτός ορίων: " + num);
+                    System.out.println("Number out of bounds: " + num);
                     return;
                 }
             }
 
             if (pivot < NUMBERS_SIZE){
-                System.out.println("Το αρχείο πρέπει να περιέχει τουλάχιστον 6 αριθμούς!");
+                System.out.println("The file must contain at least 6 numbers!");
                 return;
             }
 
@@ -72,10 +72,10 @@ public class Project01 {
                 }
 
             }
-            System.out.println("Η διαδικασία ολοκληρώθηκε. Οι έγκυροι συνδυασμοί αποθηκεύτηκαν στο αρχείο.");
+            System.out.println("Process completed. Valid combinations are saved to the file.");
 
             }catch(FileNotFoundException e) {
-            System.out.println("To Αρχείο δεν βρέθηκε . Παρακαλώ ελέγξτε την διαδρομή του αρχείου ");
+            System.out.println("The file was not found. Please check the file path.");
 
 
         }
@@ -105,21 +105,27 @@ public class Project01 {
     }
 
     public static boolean isContiguous(int[] arr) {
-
         if (arr == null) return false;
 
-        for (int i = 0; i < arr.length - 2; i++) {
-            if (arr[i] == arr[i + 1] - 1 && arr[i] == arr[i + 2] - 2) {
-                return true;
+        int consecutiveCount = 0;
+
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (arr[i] == arr[i + 1] - 1) {
+                consecutiveCount++;
+                if (consecutiveCount > 2) return false;
+            } else {
+                consecutiveCount = 0;
             }
         }
-        return false;
+
+        return true; // If the loop finishes without finding more than 2 consecutive numbers, return true
     }
+
 
     public static boolean isSameEnding(int[] arr) {
         int[] endingsCounts = new int[10];
         int lastDigit = 0;
-        boolean hasSameEndings = false;
+        boolean hasSameEndings = true;
 
         if (arr == null) return false;
 
@@ -131,7 +137,7 @@ public class Project01 {
 
         for (int count : endingsCounts) {
             if (count > 3) {
-                hasSameEndings = true;
+                hasSameEndings = false;
                 break;
 
 
@@ -163,8 +169,19 @@ public class Project01 {
         return hasSameTen;
     }
 
+    /**
+     * The combination must satisfy all the following conditions:
+     * No more than 4 even numbers
+     * No more than 4 odd numbers
+     * No three contiguous numbers
+     * No more than 3 numbers with the same last digit
+     * No more than 3 numbers from the same tens group
+     * @param arr
+     * @return the validation to meet the predicates.
+     */
+    // Check if the combination is valid based on all the criteria
     public static boolean isValidCombination(int[] arr) {
-        return isEven(arr) && isOdd(arr) && !isContiguous(arr) && !isSameEnding(arr)
+        return isEven(arr) && isOdd(arr) && isContiguous(arr) && isSameEnding(arr)
                 && isSameTen(arr);
     }
 
