@@ -173,7 +173,7 @@ public class Project01 {
      * The combination must satisfy all the following conditions:
      * No more than 4 even numbers
      * No more than 4 odd numbers
-     * No three contiguous numbers
+     * No more than 2 contiguous numbers
      * No more than 3 numbers with the same last digit
      * No more than 3 numbers from the same tens group
      * @param arr
